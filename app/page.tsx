@@ -1,306 +1,321 @@
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
-import { ArrowIcon, CheckIcon, SparkIcon } from "@/components/Icons";
+import MotionEngine from "@/components/MotionEngine";
+import { ArrowIcon, CheckIcon } from "@/components/Icons";
 import { BuyButton, NewsletterForm } from "@/components/InteractiveActions";
 
-const products = [
-  {
-    tag: "Otomasi",
-    number: "01",
-    title: "Bot WhatsApp",
-    description: "Bot responsif untuk toko, komunitas, order, broadcast, dan layanan pelanggan.",
-    stat: "24/7",
-    statLabel: "siap melayani",
-    className: "product-blue",
-  },
-  {
-    tag: "Komunitas",
-    number: "02",
-    title: "Bot Telegram",
-    description: "Menu interaktif, sistem panel, pembayaran, tools, dan manajemen pengguna.",
-    stat: "50+",
-    statLabel: "fitur modular",
-    className: "product-dark",
-  },
-  {
-    tag: "Hosting",
-    number: "03",
-    title: "Panel Pterodactyl",
-    description: "Panel siap pakai untuk menjalankan bot, website, server game, dan aplikasi Node.js.",
-    stat: "99.9%",
-    statLabel: "target uptime",
-    className: "product-lime",
-  },
-  {
-    tag: "Web Development",
-    number: "04",
-    title: "Website Custom",
-    description: "Landing page modern, cepat, responsif, dan dioptimalkan untuk konversi.",
-    stat: "100%",
-    statLabel: "mobile friendly",
-    className: "product-white",
-  },
+const services = [
+  { n: "01", title: "Bot WhatsApp", text: "Otomasi order, broadcast, customer service, downloader, dan menu bisnis yang berjalan 24/7.", type: "bot" },
+  { n: "02", title: "Bot Telegram", text: "Bot modular untuk tools, panel, pembayaran, komunitas, dan pengelolaan pengguna.", type: "telegram" },
+  { n: "03", title: "Panel & Hosting", text: "Pterodactyl siap pakai untuk bot, website, aplikasi Node.js, dan server game.", type: "hosting" },
+  { n: "04", title: "Website Custom", text: "Website cepat, responsif, modern, dan dirancang untuk membangun kepercayaan serta konversi.", type: "website" },
 ];
 
 const plans = [
-  {
-    name: "Starter",
-    price: "149K",
-    description: "Untuk proyek sederhana yang ingin segera online.",
-    features: ["1 produk digital", "Setup dasar", "Revisi minor", "Dukungan 7 hari"],
-  },
-  {
-    name: "Growth",
-    price: "499K",
-    description: "Untuk toko dan komunitas yang membutuhkan sistem lebih lengkap.",
-    features: ["Hingga 3 layanan", "Desain dan konfigurasi", "Integrasi WhatsApp", "Dukungan 30 hari"],
-    featured: true,
-  },
-  {
-    name: "Custom",
-    price: "Hubungi",
-    description: "Solusi khusus sesuai alur kerja dan target bisnismu.",
-    features: ["Scope fleksibel", "Fitur kustom", "Prioritas pengerjaan", "Dukungan lanjutan"],
-  },
+  { name: "Starter", desc: "Cocok untuk proyek sederhana yang ingin segera online.", price: "149K", features: ["1 produk digital", "Setup dasar", "1 revisi minor", "Dukungan 7 hari"] },
+  { name: "Growth", desc: "Untuk bisnis yang membutuhkan sistem digital lebih lengkap.", price: "499K", popular: true, features: ["Hingga 3 layanan", "Desain & konfigurasi", "Integrasi WhatsApp", "Dukungan 30 hari"] },
+  { name: "Custom", desc: "Solusi khusus berdasarkan alur kerja dan targetmu.", price: "Custom", features: ["Scope fleksibel", "Fitur kustom", "Prioritas pengerjaan", "Dukungan lanjutan"] },
 ];
 
 const testimonials = [
-  ["RA", "Raka Aditya", "Owner komunitas", "Bot Telegram-nya rapi, menu mudah dipakai, dan proses setup dijelaskan sampai benar-benar jalan."],
-  ["DN", "Dina Nur", "Online seller", "Respons cepat dan hasil website terasa premium. Tampilan HP juga tetap enak dilihat."],
-  ["FR", "Farel Rizky", "Developer", "Panel dan port sudah disiapkan dengan baik. Saya tinggal upload project dan menjalankannya."],
+  ["Raka Aditya", "Owner komunitas", "Bot Telegram-nya rapi, cepat, dan alurnya dijelaskan sampai benar-benar jalan."],
+  ["Dina Nur", "Online seller", "Website terasa premium dan hasil mobile-nya jauh lebih bagus dari yang saya bayangkan."],
+  ["Farel Rizky", "Developer", "Panel, allocation, dan deployment sudah disiapkan. Saya tinggal upload lalu menjalankan project."],
+  ["Nadia Putri", "Content creator", "Responsnya cepat dan revisinya tepat. Proyek jadi tidak berputar-putar."],
 ];
+
+const articles = [
+  ["AUTOMATION", "Cara bot mempercepat pelayanan pelanggan", "5 menit baca", "article-blue"],
+  ["HOSTING", "Memilih panel hosting yang stabil untuk project", "6 menit baca", "article-lime"],
+  ["WEBSITE", "Landing page yang terlihat mahal dan tetap cepat", "4 menit baca", "article-dark"],
+];
+
+function BrandStrip() {
+  const names = ["BOT SYSTEM", "PTERODACTYL", "NEXT.JS", "TELEGRAM", "WHATSAPP", "AUTOMATION", "VERCEL"];
+  return (
+    <div className="brand-strip" aria-label="Teknologi dan layanan">
+      <div className="brand-track">
+        {[0, 1].flatMap((copy) => names.map((name, i) => <span key={`${copy}-${i}`}><i className="brand-glyph" />{name}</span>))}
+      </div>
+    </div>
+  );
+}
+
+function HeroCards() {
+  return (
+    <div className="hero-cards" aria-label="Ringkasan layanan Digie Store">
+      <article className="h-card h-card-mini h-card-a">
+        <div className="mini-pill"><i /> Online</div>
+        <div className="mini-row"><span>Pesan masuk</span><b>+48%</b></div>
+        <div className="mini-row"><span>Auto reply</span><b>Aktif</b></div>
+      </article>
+
+      <article className="h-card h-card-performance h-card-b">
+        <div className="card-topline"><span>Performa</span><b>↗</b></div>
+        <strong>49%</strong>
+        <div className="tiny-line"><i /><i /><i /><i /><i /></div>
+        <div className="tag-row"><span>Strategis</span><span>Efisien</span></div>
+      </article>
+
+      <article className="h-card h-card-data h-card-c">
+        <div className="tag-cloud"><span>Profesional</span><span>Strategis</span><span>Lebih cepat</span></div>
+        <small>Digital projects</small>
+        <strong>520K+</strong>
+        <p>data diproses setiap bulan</p>
+      </article>
+
+      <article className="h-card h-card-upload h-card-d">
+        <div className="upload-plus">+</div>
+        <strong>Mulai proyek</strong>
+        <small>Ceritakan kebutuhanmu</small>
+      </article>
+
+      <article className="h-card h-card-dark h-card-e">
+        <small>Keahlian yang</small>
+        <strong>Menggabungkan strategi, data, dan teknologi.</strong>
+        <span className="dark-dot" />
+      </article>
+
+      <article className="h-card h-card-chart h-card-f">
+        <span>Highlight</span>
+        <strong>Setiap bulan</strong>
+        <svg viewBox="0 0 150 65" aria-hidden="true"><path d="M4 55C25 46 31 52 48 36S75 49 93 25s30-5 53-20" /></svg>
+        <div className="chart-axis"><i /><i /><i /><i /><i /></div>
+      </article>
+    </div>
+  );
+}
+
+function DashboardVisual() {
+  return (
+    <div className="dashboard-scene" data-tilt>
+      <div className="dash-glow" />
+      <div className="dashboard-window">
+        <div className="dashboard-head"><span>Monthly expense</span><div><i /><i /><i /></div></div>
+        <div className="expense-row"><div><small>Pengeluaran</small><strong>Rp4.9M</strong></div><span>/ Rp10M</span></div>
+        <div className="expense-progress"><i /></div>
+        <div className="transaction-list">
+          {["Bot premium", "Cloud server", "Website maintenance"].map((x, i) => <div key={x}><span className={`transaction-icon t-${i}`}>{i === 0 ? "B" : i === 1 ? "C" : "W"}</span><p><strong>{x}</strong><small>14 November 2026</small></p><b>{["Rp120K", "Rp350K", "Rp200K"][i]}</b></div>)}
+        </div>
+      </div>
+      <div className="performance-card">
+        <span>Performa</span><small>7 hari terakhir</small><strong>50+</strong>
+        <div className="performance-bars"><i /><i /><i /><i /><i /><i /><i /></div>
+      </div>
+    </div>
+  );
+}
+
+function AnalyticsVisual() {
+  return (
+    <div className="analytics-scene" data-tilt>
+      <div className="analytics-top"><span>Performance</span><small>7 hari terakhir</small></div>
+      <div className="analytics-number"><strong>49</strong><span>%</span><i>+2.5%</i></div>
+      <svg viewBox="0 0 500 210" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="currentColor" stopOpacity=".35"/><stop offset="1" stopColor="currentColor" stopOpacity="0"/></linearGradient></defs>
+        <path className="area" d="M0 182C50 165 79 192 120 144s67 8 112-33 77 27 124-31 80-21 144-67V210H0Z" />
+        <path className="line" d="M0 182C50 165 79 192 120 144s67 8 112-33 77 27 124-31 80-21 144-67" />
+      </svg>
+      <div className="analytics-years">{[2019,2020,2021,2022,2023,2024,2025].map(y => <span key={y}>{y}</span>)}</div>
+    </div>
+  );
+}
 
 export default function Home() {
   return (
     <main>
-      <section className="hero-shell" id="beranda">
-        <div className="hero-sky">
-          <Navbar />
-          <div className="hero-copy reveal">
-            <div className="hero-kicker"><SparkIcon /> Solusi digital yang dibuat lebih mudah</div>
-            <h1>Bangun bisnis digital yang <span>lebih cepat.</span></h1>
-            <p>Digie Store menyediakan bot, panel hosting, website, dan produk digital yang siap membantu ide kamu tumbuh.</p>
-            <div className="hero-actions">
-              <a className="button button-glass" href="#produk">Lihat produk</a>
-              <BuyButton product="layanan Digie Store" className="button-lime" />
-            </div>
-          </div>
+      <MotionEngine />
 
-          <div className="cloud cloud-one" />
-          <div className="cloud cloud-two" />
-          <div className="cloud cloud-three" />
+      <section className="hero" id="beranda">
+        <Navbar />
+        <div className="hero-grid" aria-hidden="true" />
+        <div className="hero-aurora" aria-hidden="true" />
+        <div className="cloud cloud-1" /><div className="cloud cloud-2" /><div className="cloud cloud-3" /><div className="cloud cloud-4" />
 
-          <div className="floating-stage" aria-label="Ringkasan layanan Digie Store">
-            <div className="float-card float-small card-left">
-              <span className="mini-status"><i /> Aktif</span>
-              <strong>Bot Online</strong>
-              <small>Auto response</small>
-            </div>
-            <div className="float-card float-stat card-mid-left">
-              <span>Pesanan selesai</span>
-              <strong>1.2K+</strong>
-              <div className="tiny-chart"><i /><i /><i /><i /><i /><i /></div>
-            </div>
-            <div className="float-card float-upload card-center">
-              <span className="plus">+</span>
-              <strong>Mulai proyek</strong>
-              <small>Ceritakan kebutuhanmu</small>
-            </div>
-            <div className="float-card float-dark card-mid-right">
-              <span>Digie system</span>
-              <strong>Bot, panel, web, dan automasi.</strong>
-              <i className="orbit-dot" />
-            </div>
-            <div className="float-card float-chart card-right">
-              <span>Performa</span>
-              <strong>+48%</strong>
-              <svg viewBox="0 0 120 52" aria-hidden="true"><path d="M2 43C20 39 23 24 40 29s23 9 34-3 16-14 44-23" /></svg>
-            </div>
-          </div>
-
-          <div className="rating-row">
-            <span>Dipercaya kreator dan bisnis digital</span>
-            <span className="stars">★★★★★</span>
+        <div className="hero-copy">
+          <div className="hero-title-mask"><h1><span>Membangun masa depan dengan</span><em>teknologi dan strategi</em></h1></div>
+          <p className="hero-sub">Kami membantu bisnis tumbuh lebih cepat melalui bot, hosting, website, dan otomasi yang dibuat dengan cermat.</p>
+          <div className="hero-actions">
+            <a className="button button-blue magnetic" href="#layanan">Lihat demo</a>
+            <BuyButton product="layanan Digie Store" className="button-lime magnetic" />
           </div>
         </div>
 
-        <div className="logo-marquee" aria-label="Kategori layanan">
-          <div className="marquee-track">
-            {Array.from({ length: 2 }).flatMap((_, copy) => ["BOT", "HOSTING", "WEBSITE", "AUTOMATION", "DIGITAL PRODUCT", "SUPPORT"].map((name) => (
-              <span key={`${copy}-${name}`}><i>✦</i>{name}</span>
+        <HeroCards />
+        <div className="hero-rating"><span>Dipercaya 4.900+ pelanggan digital</span><b>★★★★★</b></div>
+      </section>
+
+      <BrandStrip />
+
+      <section className="section about" id="tentang">
+        <div className="eyebrow" data-reveal><i /> Tentang kami</div>
+        <h2 className="kinetic-heading" data-reveal>
+          Partner digital global yang berdedikasi untuk membangun
+          <span className="orb-word"><i className="play-orb">↗</i> sistem lebih pintar</span>
+          <span className="muted"> dan </span>
+          <span className="orb-word"><i className="idea-orb">✦</i> lebih adaptif.</span>
+        </h2>
+
+        <div className="metric-mosaic">
+          <article className="metric-card metric-person" data-reveal data-tilt>
+            <span className="metric-logo">DIGIE</span>
+            <div className="portrait-art"><div className="portrait-head"/><div className="portrait-body"/><i/><b/></div>
+            <div className="metric-action">▥</div>
+          </article>
+          <article className="metric-card metric-white" data-reveal>
+            <span>Komitmen pada hasil terukur</span>
+            <strong><b data-count="100">0</b>%</strong>
+            <p>Setiap produk dibangun dengan tujuan, alur, dan ukuran keberhasilan yang jelas.</p>
+          </article>
+          <article className="metric-card metric-lime" data-reveal>
+            <span>Data points</span>
+            <strong><b data-count="520">0</b>K+</strong>
+            <p>Diproses setiap bulan untuk mendukung sistem yang lebih cepat dan relevan.</p>
+          </article>
+          <article className="metric-card metric-quote" data-reveal>
+            <span>“Strategi automasi mereka mengubah cara kami bekerja—lebih efisien, rapi, dan terasa ringan.”</span>
+            <div className="quote-person"><i>RA</i><p><b>Raka Aditya</b><small>Owner komunitas</small></p></div>
+          </article>
+          <article className="metric-card metric-blue" data-reveal>
+            <span>Proyek digital</span>
+            <strong><b data-count="250">0</b>+</strong>
+            <p>Bot, panel, website, dan sistem digital yang telah diselesaikan.</p>
+          </article>
+          <article className="metric-card metric-black" data-reveal>
+            <div className="continent-orbit"><i/><i/><i/><i/></div>
+            <span>Jangkauan layanan</span>
+            <strong><b data-count="20">0</b>+</strong>
+            <p>kota dan komunitas digital.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="services" id="layanan">
+        <div className="services-intro section">
+          <div>
+            <div className="eyebrow eyebrow-light" data-reveal><i /> Layanan</div>
+            <h2 data-reveal>Solusi lengkap dan inovasi digital yang cerdas.</h2>
+          </div>
+          <div className="services-side" data-reveal>
+            <p>Dari mengoptimalkan operasional hari ini sampai membangun produk untuk besok, kami membantu kamu bergerak lebih cepat dan percaya diri.</p>
+            <BuyButton product="konsultasi layanan" className="button-lime magnetic" />
+          </div>
+        </div>
+
+        <div className="service-list section">
+          {services.map((service) => (
+            <article className="service-row" key={service.n} data-reveal data-tilt>
+              <span className="service-number">{service.n}</span>
+              <div className={`service-icon service-${service.type}`} aria-hidden="true"><i/><b/><span/></div>
+              <div className="service-copy"><h3>{service.title}</h3><p>{service.text}</p></div>
+              <a href="#kontak" aria-label={`Pesan ${service.title}`} className="service-arrow magnetic"><ArrowIcon /></a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="expertise section">
+        <div className="expertise-head">
+          <div className="eyebrow" data-reveal><i /> Keahlian</div>
+          <h2 data-reveal>Di mana pemahaman manusia bertemu teknologi cerdas.</h2>
+          <p data-reveal>Kami menggunakan teknologi bukan untuk menggantikan kreativitas, tetapi untuk memperkuat keputusan dan mempercepat pekerjaan.</p>
+        </div>
+
+        <div className="expertise-row expertise-row-dark">
+          <div className="expertise-copy" data-reveal><span>01</span><h3>Automasi & optimasi</h3><p>Sederhanakan operasional melalui workflow cerdas yang menghemat waktu, mengurangi kesalahan, dan meningkatkan produktivitas.</p></div>
+          <DashboardVisual />
+        </div>
+
+        <div className="expertise-row expertise-row-light">
+          <div className="expertise-copy" data-reveal><span>02</span><h3>Analitik & insight</h3><p>Ubah data mentah menjadi insight strategis melalui dashboard, pelaporan, dan pemodelan yang mudah dipahami.</p></div>
+          <AnalyticsVisual />
+        </div>
+      </section>
+
+      <section className="statement-band">
+        <div className="statement-track">
+          {[0,1].flatMap(copy => ["PROFESIONAL", "STRATEGIS", "AUTOMATION", "STARTUP FEEL", "LEBIH CEPAT", "SIMPLE"].map((x,i) => <span key={`${copy}-${i}`}>{x}<i>✦</i></span>))}
+        </div>
+      </section>
+
+      <section className="transformation section">
+        <div className="transform-visual" data-reveal data-tilt>
+          <div className="transform-ring ring-a"/><div className="transform-ring ring-b"/>
+          <div className="customer-stack"><i>RA</i><i>DN</i><i>FR</i><i>NP</i></div>
+          <strong>+5.000 pelanggan</strong>
+          <div className="big-words"><span>Smart.</span><span>Simple.</span><span>Strategic.</span></div>
+        </div>
+        <div className="transform-copy" data-reveal>
+          <div className="eyebrow"><i /> Transformasi digital</div>
+          <h2>Membangun sistem yang ikut tumbuh bersama bisnismu.</h2>
+          <p>Kami memodernisasi proses, sistem, dan pengalaman digital agar lebih mudah dikelola serta siap dikembangkan.</p>
+          <a className="text-link" href="#kontak">Pelajari lebih lanjut <ArrowIcon /></a>
+        </div>
+      </section>
+
+      <section className="pricing section" id="harga">
+        <div className="pricing-head">
+          <div><div className="eyebrow" data-reveal><i /> Harga</div><h2 data-reveal>Paket fleksibel untuk setiap tahap pertumbuhan.</h2></div>
+          <div data-reveal><p>Mulai dari setup kecil hingga solusi bisnis penuh. Paket dapat disesuaikan dengan kebutuhan project.</p><a href="#kontak" className="button button-dark magnetic">Mulai sekarang <ArrowIcon /></a></div>
+        </div>
+        <div className="pricing-grid">
+          {plans.map((plan) => (
+            <article key={plan.name} className={`price-card ${plan.popular ? "price-featured" : ""}`} data-reveal data-tilt>
+              {plan.popular && <span className="popular">Paling populer</span>}
+              <span className="plan-name">{plan.name}</span>
+              <p>{plan.desc}</p>
+              <div className="price"><small>Rp</small><strong>{plan.price}</strong>{plan.price !== "Custom" && <span>/project</span>}</div>
+              <ul>{plan.features.map(feature => <li key={feature}><CheckIcon />{feature}</li>)}</ul>
+              <BuyButton product={`paket ${plan.name}`} className={plan.popular ? "button-lime full" : "button-outline full"} />
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="testimonials" id="ulasan">
+        <div className="section testimonial-head"><div className="eyebrow eyebrow-light" data-reveal><i /> Testimonial</div><h2 data-reveal>Apa kata mereka?</h2><p data-reveal>Pengalaman pelanggan setelah bekerja dengan tim Digie Store.</p></div>
+        <div className="testimonial-mask">
+          <div className="testimonial-track">
+            {[0,1].flatMap(copy => testimonials.map(([name, role, quote], i) => (
+              <article className="testimonial-card" key={`${copy}-${i}`}>
+                <div className="testimonial-stars">★★★★★</div>
+                <blockquote>“{quote}”</blockquote>
+                <div className="testimonial-person"><i>{name.split(" ").map(x=>x[0]).join("").slice(0,2)}</i><p><strong>{name}</strong><span>{role}</span></p></div>
+              </article>
             )))}
           </div>
         </div>
       </section>
 
-      <section className="section about-section" id="tentang">
-        <div className="section-label">Tentang kami</div>
-        <h2 className="statement-heading">
-          Partner digital untuk membangun solusi yang
-          <span className="inline-pill pill-blue">cepat</span>,
-          <span className="muted"> rapi, dan </span>
-          <span className="inline-pill pill-lime">mudah dipakai</span>.
-        </h2>
-
-        <div className="stats-grid">
-          <article className="stat-card stat-photo">
-            <div className="mock-window">
-              <div className="window-top"><span /><span /><span /></div>
-              <div className="window-content">
-                <div className="code-line wide" /><div className="code-line" /><div className="code-line short" />
-                <div className="dashboard-bars"><i /><i /><i /><i /></div>
-              </div>
-            </div>
-            <span className="stat-corner">DS</span>
-          </article>
-          <article className="stat-card stat-neutral">
-            <span>Proyek selesai</span>
-            <strong>250+</strong>
-            <p>Solusi digital untuk toko, komunitas, kreator, dan developer.</p>
-          </article>
-          <article className="stat-card stat-accent">
-            <span>Kepuasan klien</span>
-            <strong>98%</strong>
-            <p>Kami fokus pada hasil yang jelas, komunikasi cepat, dan dukungan nyata.</p>
-          </article>
-          <article className="stat-card stat-wide">
-            <blockquote>“Teknologi seharusnya membuat pekerjaan lebih sederhana, bukan menambah masalah baru.”</blockquote>
-            <span>Prinsip kerja Digie Store</span>
-          </article>
-          <article className="stat-card stat-dark-card">
-            <span>Waktu respons</span>
-            <strong>&lt; 15m</strong>
-            <p>Pada jam operasional.</p>
-          </article>
+      <section className="blog section" id="blog">
+        <div className="blog-head"><div><div className="eyebrow" data-reveal><i /> Blog & insight</div><h2 data-reveal>Insight dan tren terbaru.</h2></div><a className="text-link" href="#blog">Lihat semua <ArrowIcon /></a></div>
+        <div className="article-grid">
+          {articles.map(([tag,title,time,style]) => <article className="article-card" key={title} data-reveal data-tilt><div className={`article-art ${style}`}><i/><b/><span/></div><div className="article-meta"><span>{tag}</span><small>{time}</small></div><h3>{title}</h3><a href="#kontak" aria-label={title}><ArrowIcon /></a></article>)}
         </div>
       </section>
 
-      <section className="section products-section" id="produk">
-        <div className="section-heading-row">
-          <div>
-            <div className="section-label">Produk & layanan</div>
-            <h2>Semua yang dibutuhkan untuk mulai bergerak.</h2>
-          </div>
-          <p>Pilih solusi siap pakai atau minta sistem yang disesuaikan dengan kebutuhan proyekmu.</p>
-        </div>
-
-        <div className="product-grid">
-          {products.map((product) => (
-            <article className={`product-card ${product.className}`} key={product.title}>
-              <div className="product-top"><span>{product.tag}</span><b>{product.number}</b></div>
-              <div className="product-visual" aria-hidden="true">
-                <div className="visual-ring" />
-                <div className="visual-panel"><i /><i /><i /></div>
-                <span className="visual-spark">✦</span>
-              </div>
-              <h3>{product.title}</h3>
-              <p>{product.description}</p>
-              <div className="product-bottom">
-                <div><strong>{product.stat}</strong><span>{product.statLabel}</span></div>
-                <BuyButton product={product.title} className="circle-button" />
-              </div>
-            </article>
-          ))}
+      <section className="cta" id="kontak">
+        <div className="cta-cloud cta-cloud-a"/><div className="cta-cloud cta-cloud-b"/>
+        <div className="cta-copy" data-reveal><span>Dipercaya lebih dari 5.000+</span><h2>Kami menggabungkan insight manusia dengan teknologi.</h2><p>Bangun bot, panel, website, dan sistem yang lebih cepat, terukur, serta mudah digunakan.</p><BuyButton product="konsultasi proyek baru" className="button-lime magnetic" /></div>
+        <div className="cta-card" data-reveal data-tilt>
+          <div className="cta-card-top"><span>Project growth</span><i>+32%</i></div>
+          <div className="cta-bars">{[45,65,54,78,70,94,88,100].map((h,i)=><i key={i} style={{height:`${h}%`}}/>)}</div>
+          <div className="cta-card-bottom"><strong>Siap bertumbuh</strong><span>Update langsung setiap saat</span></div>
         </div>
       </section>
 
-      <section className="feature-band">
-        <div className="feature-copy">
-          <div className="section-label section-label-light">Kenapa Digie Store</div>
-          <h2>Manusia yang responsif, teknologi yang bekerja otomatis.</h2>
-          <p>Kami memadukan komunikasi yang jelas dengan sistem digital yang efisien agar kamu bisa fokus pada pertumbuhan.</p>
-          <a className="button button-lime" href="#harga">Lihat paket <ArrowIcon /></a>
-        </div>
-        <div className="feature-dashboard">
-          <div className="dash-head"><span>Project overview</span><i>Live</i></div>
-          <div className="dash-main">
-            <span>Progress bulan ini</span>
-            <strong>84%</strong>
-            <div className="progress"><i /></div>
-          </div>
-          <div className="dash-grid">
-            <div><span>Task</span><strong>32</strong><small>+8 minggu ini</small></div>
-            <div><span>Uptime</span><strong>99.9%</strong><small>stabil</small></div>
-          </div>
-          <div className="dash-list">
-            {["Website landing", "Bot automation", "Panel deployment"].map((item, i) => (
-              <div key={item}><span className={`list-dot dot-${i}`} />{item}<b>{["Done", "Review", "Active"][i]}</b></div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section pricing-section" id="harga">
-        <div className="section-heading-row pricing-head">
-          <div>
-            <div className="section-label">Paket harga</div>
-            <h2>Pilih paket yang sesuai dengan tahapmu.</h2>
-          </div>
-          <p>Harga dapat berubah sesuai tingkat kesulitan. Semua detail dikonfirmasi sebelum pengerjaan dimulai.</p>
-        </div>
-        <div className="pricing-grid">
-          {plans.map((plan) => (
-            <article className={`price-card ${plan.featured ? "featured" : ""}`} key={plan.name}>
-              {plan.featured && <span className="popular">Paling populer</span>}
-              <div className="price-name">{plan.name}</div>
-              <p>{plan.description}</p>
-              <div className="price"><span>Rp</span><strong>{plan.price}</strong></div>
-              <ul>
-                {plan.features.map((feature) => <li key={feature}><CheckIcon />{feature}</li>)}
-              </ul>
-              <BuyButton product={`paket ${plan.name}`} className={plan.featured ? "button-lime full-button" : "button-dark full-button"} />
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="section testimonial-section" id="ulasan">
-        <div className="section-label">Ulasan pelanggan</div>
-        <div className="testimonial-title-row">
-          <h2>Apa kata mereka?</h2>
-          <span>★★★★★ <small>4.9 dari 5</small></span>
-        </div>
-        <div className="testimonial-grid">
-          {testimonials.map(([initials, name, role, quote]) => (
-            <article className="testimonial-card" key={name}>
-              <div className="quote-mark">“</div>
-              <p>{quote}</p>
-              <div className="person"><span>{initials}</span><div><strong>{name}</strong><small>{role}</small></div></div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="cta-section" id="kontak">
-        <div className="cta-orb orb-one" /><div className="cta-orb orb-two" />
-        <div className="cta-content">
-          <span className="section-label section-label-light">Mulai sekarang</span>
-          <h2>Punya ide digital?<br />Mari kita buat jadi nyata.</h2>
-          <p>Ceritakan kebutuhanmu dan dapatkan rekomendasi layanan yang paling sesuai.</p>
-          <BuyButton product="konsultasi proyek baru" className="button-lime" />
-        </div>
-        <div className="newsletter-card">
-          <span>Update Digie</span>
-          <h3>Dapatkan kabar produk dan promo terbaru.</h3>
-          <NewsletterForm />
-          <small>Tanpa spam. Hanya informasi yang berguna.</small>
-        </div>
+      <section className="newsletter">
+        <div><span>Mudah beradaptasi dengan perubahan dan berkembang melalui infrastruktur fleksibel yang mendukung pertumbuhan bisnismu.</span></div>
+        <div><h3>Berlangganan newsletter</h3><NewsletterForm /></div>
       </section>
 
       <footer>
-        <div className="footer-main">
-          <a className="brand footer-brand" href="#beranda">
-            <Image src="/logo-mark.svg" alt="" width={42} height={42} />
-            <span>Digie Store</span>
-          </a>
-          <p>Solusi digital sederhana untuk membantu bisnismu bergerak lebih cepat.</p>
-          <div className="footer-links">
-            <div><strong>Navigasi</strong><a href="#produk">Produk</a><a href="#tentang">Tentang</a><a href="#harga">Harga</a></div>
-            <div><strong>Layanan</strong><a href="#produk">Bot</a><a href="#produk">Panel</a><a href="#produk">Website</a></div>
-            <div><strong>Kontak</strong><a href="#kontak">WhatsApp</a><a href={process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com"} target="_blank" rel="noreferrer">Instagram</a></div>
-          </div>
+        <div className="footer-top">
+          <a className="brand footer-brand" href="#beranda"><Image src="/logo-mark.svg" alt="" width={38} height={38}/><span>Digie Store</span></a>
+          <div className="footer-links"><div><strong>Halaman</strong><a href="#beranda">Beranda</a><a href="#tentang">Tentang</a><a href="#layanan">Layanan</a></div><div><strong>Bisnis</strong><a href="#harga">Harga</a><a href="#ulasan">Ulasan</a><a href="#blog">Blog</a></div><div><strong>Kontak</strong><a href="#kontak">WhatsApp</a><a href={process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com"}>Instagram</a><a href="mailto:hello@digiestore.id">Email</a></div></div>
         </div>
-        <div className="footer-bottom"><span>© {new Date().getFullYear()} Digie Store. All rights reserved.</span><a href="#beranda">Kembali ke atas ↑</a></div>
+        <div className="footer-wordmark">DIGIE STORE</div>
+        <div className="footer-bottom"><span>© {new Date().getFullYear()} Digie Store. Semua hak dilindungi.</span><a href="#beranda">Kembali ke atas ↑</a></div>
       </footer>
     </main>
   );

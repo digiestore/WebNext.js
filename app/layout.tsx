@@ -2,28 +2,16 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Digie Store — Solusi Digital untuk Bisnis Modern",
-  description:
-    "Produk digital, bot otomatis, panel hosting, dan website siap pakai untuk membantu bisnis tumbuh lebih cepat.",
-  icons: {
-    icon: "/favicon.svg",
-  },
+  title: "Digie Store — Bot, Hosting, Website & Automation",
+  description: "Solusi digital untuk bot WhatsApp, bot Telegram, panel Pterodactyl, website custom, dan automation.",
+  icons: { icon: "/favicon.svg" },
   openGraph: {
     title: "Digie Store",
-    description: "Solusi digital untuk bisnis, komunitas, dan kreator.",
+    description: "Solusi digital yang dibuat lebih mudah.",
     type: "website",
-    locale: "id_ID",
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="id">
-      <body>{children}</body>
-    </html>
-  );
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="id"><body>{children}</body></html>;
 }
