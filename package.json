@@ -1,6 +1,6 @@
 {
   "name": "digie-store-nextjs",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -21,7 +21,5 @@
     "eslint-config-next": "16.2.11",
     "typescript": "^5.9.0"
   },
-  "engines": {
-    "node": ">=20.9.0"
-  }
+  "engines": { "node": ">=20.9.0" }
 }
